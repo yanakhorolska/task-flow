@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Learn Angular routing",
+    "description": "Practice routes and route parameters",
+    "status": "in-progress",
+    "priority": "high",
+    "dueDate": "2026-09-28"
+  },
+  {
+    "id": 2,
+    "title": "Prepare for interview",
+    "description": "Review Angular fundamentals",
+    "status": "todo",
+    "priority": "high",
+    "dueDate": "2026-09-30"
+  },
+  {
+    "id": 3,
+    "title": "Review TypeScript",
+    "description": "Practice interfaces and union types",
+    "status": "done",
+    "priority": "medium",
+    "dueDate": "2026-09-25"
+  }
+]
