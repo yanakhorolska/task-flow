@@ -1,10 +1,12 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Task } from '../../models/task.model';
 import { RouterLink } from '@angular/router';
+
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-card',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './task-card.html',
   styleUrl: './task-card.scss',
 })
