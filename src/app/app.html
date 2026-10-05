@@ -1,1 +1,39 @@
-<router-outlet>Hello</router-outlet>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" routerLink="/tasks" aria-label="TaskFlow home">
+      <span class="brand-mark">T</span>
+      <span>TaskFlow</span>
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+      <a routerLink="/tasks" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <span class="nav-icon">▦</span>
+        Tasks
+      </a>
+      <a routerLink="/tasks/new" routerLinkActive="active">
+        <span class="nav-icon">＋</span>
+        New task
+      </a>
+    </nav>
+
+    <div class="sidebar-note">
+      <span class="eyebrow">Built with</span>
+      <strong>Angular 22</strong>
+      <small>TypeScript · RxJS · Reactive Forms</small>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">Workspace</span>
+        <strong>My tasks</strong>
+      </div>
+      <div class="avatar" aria-label="Yana">Y</div>
+    </header>
+
+    <section class="page">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>
