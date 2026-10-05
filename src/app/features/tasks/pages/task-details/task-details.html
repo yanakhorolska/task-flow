@@ -1,10 +1,38 @@
 @if (task$ | async; as task) {
-  <h1>{{ task.title }}</h1>
+  <section class="details-page">
+    <a class="back-link" routerLink="/tasks">← Back to tasks</a>
 
-  <p>{{ task.description }}</p>
-  <p>Status: {{ task.status }}</p>
-  <p>Priority: {{ task.priority }}</p>
-  <p>Due date: {{ task.dueDate }}</p>
+    <article class="details-card">
+      <div class="title-row">
+        <div>
+          <span class="eyebrow">Task details</span>
+          <h1>{{ task.title }}</h1>
+        </div>
+        <span class="status" [attr.data-status]="task.status">{{ task.status }}</span>
+      </div>
+
+      <p class="description">{{ task.description }}</p>
+
+      <div class="detail-grid">
+        <div>
+          <span>Status</span>
+          <strong>{{ task.status }}</strong>
+        </div>
+        <div>
+          <span>Priority</span>
+          <strong>{{ task.priority }}</strong>
+        </div>
+        <div>
+          <span>Due date</span>
+          <strong>{{ task.dueDate }}</strong>
+        </div>
+      </div>
+    </article>
+  </section>
 } @else {
-  <p>Task not found.</p>
+  <section class="not-found">
+    <h1>Task not found</h1>
+    <p>The task may have been removed or the URL is incorrect.</p>
+    <a routerLink="/tasks">Back to tasks</a>
+  </section>
 }
