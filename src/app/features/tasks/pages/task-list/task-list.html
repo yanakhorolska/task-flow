@@ -1,7 +1,59 @@
-<h1>Tasks</h1>
+@if (viewModel$ | async; as vm) {
+  <section class="page-header">
+    <div>
+      <span class="eyebrow">Overview</span>
+      <h1>Tasks</h1>
+      <p>Plan your work, track progress and keep deadlines visible.</p>
+    </div>
 
-@if (tasks$ | async; as tasks) {
-  @for (task of tasks; track task.id) {
-    <app-task-card [task]="task"></app-task-card>
-  }
+    <a class="primary-action" routerLink="/tasks/new">+ New task</a>
+  </section>
+
+  <section class="stats" aria-label="Task summary">
+    <article>
+      <span>Total tasks</span>
+      <strong>{{ vm.total }}</strong>
+      <small>All tracked work</small>
+    </article>
+
+    <article>
+      <span>To do</span>
+      <strong>{{ vm.todo }}</strong>
+      <small>Waiting to start</small>
+    </article>
+
+    <article>
+      <span>In progress</span>
+      <strong>{{ vm.inProgress }}</strong>
+      <small>Currently active</small>
+    </article>
+
+    <article>
+      <span>Completed</span>
+      <strong>{{ vm.done }}</strong>
+      <small>Finished tasks</small>
+    </article>
+  </section>
+
+  <section class="task-panel">
+    <div class="panel-heading">
+      <div>
+        <h2>All tasks</h2>
+        <p>Your current Angular learning and development work.</p>
+      </div>
+      <span class="count">{{ vm.total }} tasks</span>
+    </div>
+
+    <div class="task-grid">
+      @for (task of vm.tasks; track task.id) {
+        <app-task-card [task]="task"></app-task-card>
+      } @empty {
+        <div class="empty-state">
+          <h3>No tasks yet</h3>
+          <p>Create your first task to start building your workflow.</p>
+          <a class="primary-action" routerLink="/tasks/new">Create task</a>
+        </div>
+      }
+    </div>
+  </section>
 }
