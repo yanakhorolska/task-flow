@@ -1,12 +1,19 @@
-<article>
-  <a [routerLink]="['/tasks', task.id]"> View </a>
-  <h2>{{ task.title }}</h2>
+<article class="task-card">
+  <div class="task-main">
+    <div class="task-title-row">
+      <h3>{{ task.title }}</h3>
+      <span class="status" [attr.data-status]="task.status">{{ task.status }}</span>
+    </div>
 
-  <p>{{ task.description }}</p>
+    <p>{{ task.description }}</p>
 
-  <p>Status: {{ task.status }}</p>
-  <p>Priority: {{ task.priority }}</p>
-  <p>Due date: {{ task.dueDate | date: 'dd MMM yyyy' }}</p>
+    <div class="meta">
+      <span class="priority" [attr.data-priority]="task.priority">
+        {{ task.priority }} priority
+      </span>
+      <span>Due {{ task.dueDate | date: 'dd MMM yyyy' }}</span>
+    </div>
+  </div>
 
-  <button type="button" (click)="onDelete()">Delete</button>
+  <a class="details-link" [routerLink]="['/tasks', task.id]">View details →</a>
 </article>
