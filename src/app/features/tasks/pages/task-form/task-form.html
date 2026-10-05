@@ -1,51 +1,60 @@
-<h1>Create Task</h1>
+<section class="form-page">
+  <header>
+    <span class="eyebrow">Task management</span>
+    <h1>Create new task</h1>
+    <p>Add the information needed to plan and prioritize your work.</p>
+  </header>
 
-<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="title">Title</label>
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div class="field field-full">
+      <label for="title">Title</label>
+      <input id="title" type="text" formControlName="title" placeholder="e.g. Build dashboard filters" />
 
-    <input id="title" type="text" formControlName="title" />
+      @if (taskForm.controls.title.touched && taskForm.controls.title.hasError('required')) {
+        <small class="error">Title is required.</small>
+      }
 
-    @if (taskForm.controls.title.touched && taskForm.controls.title.hasError('required')) {
-      <p>Title is required.</p>
-    }
+      @if (taskForm.controls.title.touched && taskForm.controls.title.hasError('minlength')) {
+        <small class="error">Title must contain at least 3 characters.</small>
+      }
+    </div>
 
-    @if (taskForm.controls.title.touched && taskForm.controls.title.hasError('minlength')) {
-      <p>Title must contain at least 3 characters.</p>
-    }
-  </div>
+    <div class="field field-full">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="5"
+        placeholder="Describe what needs to be done"
+      ></textarea>
+    </div>
 
-  <div>
-    <label for="description">Description</label>
+    <div class="field">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status">
+        <option value="todo">To do</option>
+        <option value="in-progress">In progress</option>
+        <option value="done">Done</option>
+      </select>
+    </div>
 
-    <textarea id="description" formControlName="description"></textarea>
-  </div>
+    <div class="field">
+      <label for="priority">Priority</label>
+      <select id="priority" formControlName="priority">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
 
-  <div>
-    <label for="status">Status</label>
+    <div class="field field-full">
+      <label for="dueDate">Due date</label>
+      <input id="dueDate" type="date" formControlName="dueDate" />
+    </div>
 
-    <select id="status" formControlName="status">
-      <option value="todo">Todo</option>
-      <option value="in-progress">In Progress</option>
-      <option value="done">Done</option>
-    </select>
-  </div>
-
-  <div>
-    <label for="priority">Priority</label>
-
-    <select id="priority" formControlName="priority">
-      <option value="low">Low</option>
-      <option value="medium">Medium</option>
-      <option value="high">High</option>
-    </select>
-  </div>
-
-  <div>
-    <label for="dueDate">Due date</label>
-
-    <input id="dueDate" type="date" formControlName="dueDate" />
-  </div>
-
-  <button type="submit">Create task</button>
-</form>
+    <div class="actions field-full">
+      <a routerLink="/tasks">Cancel</a>
+      <button type="submit">Create task</button>
+    </div>
+  </form>
+</section>
