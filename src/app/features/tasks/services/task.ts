@@ -1,6 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { map } from 'rxjs';
 
 import { Task } from '../models/task.model';
 
@@ -9,21 +9,31 @@ import { Task } from '../models/task.model';
 })
 export class TaskService {
   private http = inject(HttpClient);
+  private readonly tasksState = signal<Task[]>([]);
+  readonly tasks = this.tasksState.asReadonly();
 
-  getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>('/tasks.json').pipe(
-      tap((tasks) => console.log('Loaded tasks:', tasks)),
-
-      map((tasks) => [...tasks].sort((a, b) => a.title.localeCompare(b.title))),
-
-      catchError((error) => {
-        console.error('Failed to load tasks:', error);
-
-        return of([]);
-      }),
-    );
+  constructor() {
+    this.loadTasks();
   }
-  getTask(id: number): Observable<Task | undefined> {
-    return this.getTasks().pipe(map((tasks) => tasks.find((task) => task.id === id)));
+
+  getTaskById(id: number): Task | undefined {
+    return this.tasks().find((task) => task.id === id);
+  }
+
+  loadTasks(): void {
+    this.http.get<Task[]>('/tasks.json').subscribe((tasks) => {
+      this.tasksState.set(tasks);
+    });
+  }
+  addTask(newTask: Task): void {
+    this.tasksState.update((tasks) => [...tasks, newTask]);
+  }
+  deleteTask(id: number): void {
+    this.tasksState.update((tasks) => tasks.filter((task) => task.id !== id));
+  }
+  updateTask(id: number, updatedTask: Task): void {
+    this.tasksState.update((tasks) =>
+      tasks.map((task) => (task.id === id ? { ...task, ...updatedTask } : task)),
+    );
   }
 }

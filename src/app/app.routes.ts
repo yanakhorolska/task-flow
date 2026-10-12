@@ -17,6 +17,10 @@ export const routes: Routes = [
     component: TaskDetails,
   },
   {
+    path: 'tasks/:id/edit',
+    component: TaskForm,
+  },
+  {
     path: '',
     redirectTo: 'tasks',
     pathMatch: 'full',

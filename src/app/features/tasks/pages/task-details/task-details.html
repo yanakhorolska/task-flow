@@ -1,4 +1,4 @@
-@if (task$ | async; as task) {
+@if (task(); as task) {
   <section class="details-page">
     <a class="back-link" routerLink="/tasks">← Back to tasks</a>
 
@@ -26,6 +26,31 @@
           <span>Due date</span>
           <strong>{{ task.dueDate }}</strong>
         </div>
+      </div>
+      <div class="details-buttons-box">
+        <app-task-delete-button
+          [taskId]="task.id"
+          (deleteTask)="onDelete($event)"
+        ></app-task-delete-button>
+
+        @if (isDeleteModalOpen) {
+          <div class="modal-backdrop">
+            <div class="modal">
+              <h2>Delete task?</h2>
+
+              <p>Are you sure you want to delete this task? This action cannot be undone.</p>
+
+              <div class="modal-actions">
+                <button type="button" class="cancel-button" (click)="cancelDelete()">Cancel</button>
+
+                <button type="button" class="delete-button" (click)="confirmDelete()">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+        <app-task-edit-button [taskId]="task.id"></app-task-edit-button>
       </div>
     </article>
   </section>

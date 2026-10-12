@@ -1,9 +1,8 @@
-@if (viewModel$ | async; as vm) {
+@if (viewModel(); as vm) {
   <section class="page-header">
     <div>
       <span class="eyebrow">Overview</span>
       <h1>Tasks</h1>
-      <p>Plan your work, track progress and keep deadlines visible.</p>
     </div>
 
     <a class="primary-action" routerLink="/tasks/new">+ New task</a>
@@ -39,7 +38,6 @@
     <div class="panel-heading">
       <div>
         <h2>All tasks</h2>
-        <p>Your current Angular learning and development work.</p>
       </div>
       <span class="count">{{ vm.total }} tasks</span>
     </div>
