@@ -63,3 +63,36 @@ button:disabled {
   background: var(--accent-soft);
   color: var(--accent-dark);
 }
+
+.placeholder-page {
+  min-height: 360px;
+  padding: 36px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 88% 18%, rgba(129, 149, 120, 0.13), transparent 15rem),
+    linear-gradient(135deg, #fffaf4, #f7e8dc);
+  box-shadow: var(--shadow);
+}
+
+.placeholder-page .eyebrow {
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.placeholder-page h1 {
+  margin: 8px 0 10px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  letter-spacing: -0.04em;
+}
+
+.placeholder-page p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--muted-strong);
+  line-height: 1.7;
+}

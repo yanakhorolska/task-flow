@@ -1,0 +1,77 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" routerLink="/tasks" aria-label="TaskFlow home">
+      <span class="brand-mark">❧</span>
+      <span>TaskFlow</span>
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+      <span class="nav-label">Workspace</span>
+
+      <a routerLink="/tasks" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <span class="nav-icon">☷</span>
+        My tasks
+      </a>
+
+      <a routerLink="/tasks/new" routerLinkActive="active">
+        <span class="nav-icon">＋</span>
+        New task
+      </a>
+
+      <a routerLink="/calendar" routerLinkActive="active">
+        <span class="nav-icon">□</span>
+        Calendar
+      </a>
+
+      <a routerLink="/focus" routerLinkActive="active">
+        <span class="nav-icon">◷</span>
+        Focus
+      </a>
+
+      <a routerLink="/phones" routerLinkActive="active">
+        <span class="nav-icon">◫</span>
+        Phones
+      </a>
+
+      <a routerLink="/notes" routerLinkActive="active">
+        <span class="nav-icon">≡</span>
+        Notes
+      </a>
+
+      <a routerLink="/goals" routerLinkActive="active">
+        <span class="nav-icon">◎</span>
+        Goals
+      </a>
+
+      <a routerLink="/wishlist" routerLinkActive="active">
+        <span class="nav-icon">♡</span>
+        Wishlist
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a routerLink="/login">Sign in</a>
+      <a class="register-link" routerLink="/register">Create account</a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-copy">
+        <span class="eyebrow">Your cozy workspace</span>
+        <strong>Organize today, breathe easier tomorrow.</strong>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="theme-preview" type="button" aria-label="Theme settings preview" disabled>
+          ☼
+        </button>
+        <div class="avatar" aria-label="Yana">Y</div>
+      </div>
+    </header>
+
+    <section class="page">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>

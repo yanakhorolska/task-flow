@@ -1,11 +1,17 @@
 import { Routes } from '@angular/router';
 
-import { AppShell } from './shared/layout/app-shell/app-shell';
-import { Login } from './features/auth/pages/login/login';
-import { Register } from './features/auth/pages/register/register';
-import { TaskList } from './features/tasks/pages/task-list/task-list';
-import { TaskDetails } from './features/tasks/pages/task-details/task-details';
-import { TaskForm } from './features/tasks/pages/task-form/task-form';
+import { AppShell } from './components/layout/app-shell/app-shell';
+import { Login } from './pages/login/login';
+import { Register } from './pages/register/register';
+import { TaskList } from './pages/tasks/task-list';
+import { TaskDetails } from './pages/task-details/task-details';
+import { TaskForm } from './pages/task-form/task-form';
+import { CalendarPage } from './pages/calendar/calendar';
+import { FocusPage } from './pages/focus/focus';
+import { PhonesPage } from './pages/phones/phones';
+import { NotesPage } from './pages/notes/notes';
+import { GoalsPage } from './pages/goals/goals';
+import { WishlistPage } from './pages/wishlist/wishlist';
 
 export const routes: Routes = [
   {
@@ -20,27 +26,17 @@ export const routes: Routes = [
     path: '',
     component: AppShell,
     children: [
-      {
-        path: 'tasks',
-        component: TaskList,
-      },
-      {
-        path: 'tasks/new',
-        component: TaskForm,
-      },
-      {
-        path: 'tasks/:id',
-        component: TaskDetails,
-      },
-      {
-        path: 'tasks/:id/edit',
-        component: TaskForm,
-      },
-      {
-        path: '',
-        redirectTo: 'tasks',
-        pathMatch: 'full',
-      },
+      { path: 'tasks', component: TaskList },
+      { path: 'tasks/new', component: TaskForm },
+      { path: 'tasks/:id', component: TaskDetails },
+      { path: 'tasks/:id/edit', component: TaskForm },
+      { path: 'calendar', component: CalendarPage },
+      { path: 'focus', component: FocusPage },
+      { path: 'phones', component: PhonesPage },
+      { path: 'notes', component: NotesPage },
+      { path: 'goals', component: GoalsPage },
+      { path: 'wishlist', component: WishlistPage },
+      { path: '', redirectTo: 'tasks', pathMatch: 'full' },
     ],
   },
 ];
