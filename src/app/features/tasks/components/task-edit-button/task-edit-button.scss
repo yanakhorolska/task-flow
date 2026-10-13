@@ -1,15 +1,13 @@
 .edit-button {
   min-height: 44px;
   padding: 0 18px;
+  border: 0;
   border-radius: 12px;
+  background: var(--accent);
+  color: #fffaf6;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #6658ed;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 750;
-  box-shadow: 0 8px 20px rgba(102, 88, 237, 0.18);
-  border: none;
-  cursor: pointer;
+  font-weight: 800;
+  box-shadow: 0 10px 24px rgba(139, 87, 62, 0.16);
 }

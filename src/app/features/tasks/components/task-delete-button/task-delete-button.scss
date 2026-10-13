@@ -1,15 +1,12 @@
 .delete-button {
   min-height: 44px;
   padding: 0 18px;
+  border: 1px solid #e8c8c4;
   border-radius: 12px;
+  background: var(--danger-soft);
+  color: #984b47;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #6658ed;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 750;
-  box-shadow: 0 8px 20px rgba(102, 88, 237, 0.18);
-  border: none;
-  cursor: pointer;
+  font-weight: 800;
 }

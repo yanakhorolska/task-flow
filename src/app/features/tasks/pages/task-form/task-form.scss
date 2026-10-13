@@ -3,7 +3,7 @@
 }
 
 .form-page {
-  max-width: 820px;
+  max-width: 840px;
   margin: 0 auto;
 }
 
@@ -12,11 +12,11 @@ header {
 }
 
 .eyebrow {
-  color: #6b7280;
-  font-size: 0.78rem;
-  font-weight: 750;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 850;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
 }
 
 h1,
@@ -25,24 +25,28 @@ p {
 }
 
 h1 {
-  margin-top: 5px;
-  font-size: clamp(2rem, 4vw, 2.5rem);
+  margin-top: 6px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
   letter-spacing: -0.04em;
 }
 
 header p {
   margin-top: 8px;
-  color: #737a8c;
+  color: var(--muted-strong);
 }
 
 form {
-  padding: 24px;
-  border: 1px solid #e6e8f0;
-  border-radius: 18px;
-  background: #fff;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(129, 149, 120, 0.08), transparent 15rem),
+    var(--surface);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
+  box-shadow: var(--shadow);
 }
 
 .field {
@@ -55,27 +59,29 @@ form {
 }
 
 label {
+  color: var(--muted-strong);
   font-size: 0.86rem;
-  font-weight: 750;
+  font-weight: 800;
 }
 
 input,
 textarea,
 select {
   width: 100%;
-  border: 1px solid #dfe2eb;
-  border-radius: 11px;
-  background: #fbfbfd;
-  color: #172033;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: #fffdfa;
+  color: var(--text);
   padding: 12px 13px;
   outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-  border-color: #776bf1;
-  box-shadow: 0 0 0 3px rgba(119, 107, 241, 0.12);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(164, 102, 72, 0.1);
 }
 
 textarea {
@@ -83,44 +89,45 @@ textarea {
 }
 
 .error {
-  color: #b73c4a;
+  color: var(--danger);
 }
 
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding-top: 6px;
+  padding-top: 8px;
 }
 
 .actions a,
 .actions button {
   min-height: 44px;
   padding: 0 18px;
-  border-radius: 11px;
+  border-radius: 12px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  font-weight: 750;
+  font-weight: 800;
 }
 
 .actions a {
-  color: #5e6575;
-  border: 1px solid #dfe2eb;
+  color: var(--muted-strong);
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
 }
 
 .actions button {
   border: 0;
-  background: #6658ed;
-  color: #fff;
-  cursor: pointer;
+  background: var(--accent);
+  color: #fffaf6;
+  box-shadow: 0 10px 24px rgba(139, 87, 62, 0.16);
 }
 
 @media (max-width: 620px) {
   form {
     grid-template-columns: 1fr;
-    padding: 18px;
+    padding: 20px 18px;
   }
 
   .field-full {

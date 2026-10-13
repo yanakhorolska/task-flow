@@ -1,0 +1,3 @@
+@use '../auth-shared' as auth;
+
+@include auth.auth-page;

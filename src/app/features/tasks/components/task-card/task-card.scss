@@ -1,12 +1,19 @@
 .task-card {
   padding: 18px;
-  border: 1px solid #e8eaf1;
-  border-radius: 14px;
-  background: #fbfbfd;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffdfa;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-strong);
+  box-shadow: 0 12px 26px rgba(91, 65, 49, 0.07);
 }
 
 .task-main {
@@ -28,52 +35,54 @@ p {
 }
 
 h3 {
-  font-size: 1rem;
+  color: var(--text);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.08rem;
 }
 
 p {
-  color: #70778a;
-  line-height: 1.5;
+  color: var(--muted-strong);
+  line-height: 1.55;
 }
 
 .status,
 .priority {
   width: fit-content;
-  padding: 5px 8px;
+  padding: 5px 9px;
   border-radius: 999px;
   font-size: 0.72rem;
-  font-weight: 750;
+  font-weight: 800;
   text-transform: capitalize;
 }
 
 .status[data-status='todo'] {
-  background: #e8efff;
-  color: #315fbd;
+  background: var(--blue-soft);
+  color: #47677d;
 }
 
 .status[data-status='in-progress'] {
-  background: #fff3d8;
-  color: #98670a;
+  background: var(--yellow-soft);
+  color: #8b6728;
 }
 
 .status[data-status='done'] {
-  background: #dff6e9;
-  color: #27764a;
+  background: var(--sage-soft);
+  color: #55704f;
 }
 
 .priority[data-priority='high'] {
-  background: #ffe5e8;
-  color: #b83b49;
+  background: var(--danger-soft);
+  color: #9b4f4b;
 }
 
 .priority[data-priority='medium'] {
-  background: #fff3d8;
-  color: #98670a;
+  background: var(--lavender-soft);
+  color: #75618e;
 }
 
 .priority[data-priority='low'] {
-  background: #e1f5ea;
-  color: #2c7450;
+  background: var(--sage-soft);
+  color: #55704f;
 }
 
 .meta {
@@ -81,16 +90,16 @@ p {
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  color: #7a8192;
+  color: var(--muted);
   font-size: 0.78rem;
 }
 
 .details-link {
   flex: 0 0 auto;
-  color: #5c50dc;
+  color: var(--accent-dark);
   text-decoration: none;
   font-size: 0.86rem;
-  font-weight: 750;
+  font-weight: 800;
 }
 
 .details-link:hover {

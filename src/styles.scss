@@ -1,3 +1,25 @@
+:root {
+  --page-bg: #f7f1e9;
+  --surface: #fffdf9;
+  --surface-soft: #fbf4ec;
+  --text: #342d29;
+  --muted: #8b817a;
+  --muted-strong: #675f59;
+  --line: #eadfd4;
+  --line-strong: #dccdbf;
+  --accent: #a46648;
+  --accent-dark: #7e4b34;
+  --accent-soft: #f2dfd2;
+  --sage: #819578;
+  --sage-soft: #e7efe2;
+  --blue-soft: #e5eef4;
+  --lavender-soft: #eee8f6;
+  --yellow-soft: #f8edcf;
+  --danger: #b85f5a;
+  --danger-soft: #f9e2df;
+  --shadow: 0 20px 50px rgba(91, 65, 49, 0.08);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -6,11 +28,15 @@ html,
 body {
   margin: 0;
   min-height: 100%;
-  background: #f7f8fc;
-  color: #172033;
+  background: var(--page-bg);
+  color: var(--text);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
+}
+
+body {
+  min-width: 320px;
 }
 
 button,
@@ -23,4 +49,17 @@ select {
 button,
 a {
   -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
 }
