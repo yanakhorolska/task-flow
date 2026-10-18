@@ -73,48 +73,49 @@ h1 {
 }
 
 .stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
   margin-bottom: 24px;
 }
+.stats p {
+  color: var(--muted-strong);
+}
+.filter-button-box {
+  display: flex;
+  gap: 15px;
+  padding-top: 10px;
+}
+.filter-button {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 11px;
+  font-weight: 750;
+  border: 1px solid var(--line-strong);
 
-.stats article {
-  padding: 18px;
-  border: 1px solid var(--line);
-  border-radius: 17px;
-  background: var(--surface);
-  display: grid;
-  gap: 5px;
-  box-shadow: 0 8px 24px rgba(91, 65, 49, 0.04);
+  &.active {
+    border: 2px solid #a56649;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #a56649;
+    outline-offset: 3px;
+  }
+}
+.status-all {
+  background: #e9af685a;
+  color: #9d6704;
+}
+.status-todo {
+  background: var(--blue-soft);
+  color: #47677d;
 }
 
-.stats article:nth-child(1) {
-  background: linear-gradient(145deg, #fffdf9, #fbefe6);
+.status-in-progress {
+  background: var(--yellow-soft);
+  color: #8b6728;
 }
 
-.stats article:nth-child(2) {
-  background: linear-gradient(145deg, #fffdf9, var(--blue-soft));
-}
-
-.stats article:nth-child(3) {
-  background: linear-gradient(145deg, #fffdf9, var(--yellow-soft));
-}
-
-.stats article:nth-child(4) {
-  background: linear-gradient(145deg, #fffdf9, var(--sage-soft));
-}
-
-.stats span,
-.stats small {
-  color: var(--muted);
-}
-
-.stats strong {
-  color: var(--text);
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 2rem;
-  letter-spacing: -0.03em;
+.status-done {
+  background: var(--sage-soft);
+  color: #55704f;
 }
 
 .task-panel {
@@ -133,6 +134,57 @@ h1 {
 .panel-heading h2 {
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 1.35rem;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+
+  input {
+    width: 100%;
+    padding: 14px 44px 14px 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    background: #fffdfa;
+    color: var(--text);
+    outline: none;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+}
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(164, 102, 72, 0.1);
+}
+
+.clear-button {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  font-size: 24px;
+  line-height: 1;
+  color: #a58b7d;
+
+  &:hover {
+    color: #754c39;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #a56649;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+.search-section {
+  padding-bottom: 20px;
 }
 
 .count {

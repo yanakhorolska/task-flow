@@ -9,4 +9,7 @@ export interface Task {
   status: TaskStatus;
   priority: TaskPriority;
   dueDate: string;
+  createdAt: string;
 }
+
+export type TaskUpdate = Omit<Task, 'id' | 'createdAt'>;

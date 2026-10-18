@@ -1,0 +1,110 @@
+@if (viewModel(); as vm) {
+  <section class="page-header">
+    <div>
+      <span class="eyebrow">Overview</span>
+      <h1>Tasks</h1>
+    </div>
+
+    <a class="primary-action" routerLink="/tasks/new">+ New task</a>
+  </section>
+  <section class="search-section">
+    <div class="search-wrapper">
+      <input
+        #searchInput
+        type="text"
+        placeholder="Search tasks..."
+        [value]="searchQuery()"
+        (input)="onSearch(searchInput.value)"
+      />
+
+      @if (searchQuery()) {
+        <button type="button" class="clear-button" aria-label="Clear search" (click)="onSearch('')">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
+      }
+    </div>
+  </section>
+  <section class="stats" aria-label="Task summary">
+    <p>Filter by:</p>
+    <div class="filter-button-box">
+      <button
+        type="button"
+        class="filter-button status-all"
+        (click)="onStatusChange('all')"
+        [class.active]="statusFilter() === 'all'"
+        [attr.aria-pressed]="statusFilter() === 'all'"
+      >
+        Total tasks
+        {{ vm.total }}
+      </button>
+      <button
+        type="button"
+        class="filter-button status-todo"
+        (click)="onStatusChange('todo')"
+        [class.active]="statusFilter() === 'todo'"
+        [attr.aria-pressed]="statusFilter() === 'todo'"
+      >
+        To do
+        {{ vm.todo }}
+      </button>
+      <button
+        type="button"
+        class="filter-button status-in-progress"
+        (click)="onStatusChange('in-progress')"
+        [class.active]="statusFilter() === 'in-progress'"
+        [attr.aria-pressed]="statusFilter() === 'in-progress'"
+      >
+        In progress
+        {{ vm.inProgress }}
+      </button>
+      <button
+        type="button"
+        class="filter-button status-done"
+        (click)="onStatusChange('done')"
+        [class.active]="statusFilter() === 'done'"
+        [attr.aria-pressed]="statusFilter() === 'done'"
+      >
+        Completed
+        {{ vm.done }}
+      </button>
+    </div>
+  </section>
+  <select #sortSelect (change)="onSortChange(sortSelect.value)">
+    <option value="due-asc">Due date: earliest</option>
+    <option value="due-desc">Due date: latest</option>
+    <option value="priority">Priority: highest first</option>
+    <option value="newest">Newest first</option>
+    <option value="oldest">Oldest first</option>
+  </select>
+  <section class="task-panel">
+    <div class="panel-heading">
+      <div>
+        <h2>All tasks</h2>
+      </div>
+      <span class="count">{{ vm.total }} tasks</span>
+    </div>
+
+    <div class="task-grid">
+      @for (task of vm.tasks; track task.id) {
+        <app-task-card [task]="task"></app-task-card>
+      } @empty {
+        <div class="empty-state">
+          <h3>No tasks yet</h3>
+          <p>Create your first task to start building your workflow.</p>
+          <a class="primary-action" routerLink="/tasks/new">Create task</a>
+        </div>
+      }
+    </div>
+  </section>
+}

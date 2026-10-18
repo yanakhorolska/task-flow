@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 
 import { TaskService } from '../../services/task';
-import { Task } from '../../models/task.model';
+import { Task, TaskStatus, TaskPriority } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-form',
@@ -21,11 +21,11 @@ export class TaskForm {
 
   isEditMode = this.taskId !== null;
 
-  taskForm = this.fb.group({
+  taskForm = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
     description: [''],
-    status: ['todo', Validators.required],
-    priority: ['medium', Validators.required],
+    status: this.fb.nonNullable.control<TaskStatus>('todo', Validators.required),
+    priority: this.fb.nonNullable.control<TaskPriority>('medium', Validators.required),
     dueDate: ['', Validators.required],
   });
 
@@ -38,10 +38,7 @@ export class TaskForm {
     const formValue = this.taskForm.getRawValue();
 
     if (this.isEditMode && this.taskId) {
-      this.taskService.updateTask(Number(this.taskId), {
-        id: Number(this.taskId),
-        ...formValue,
-      } as Task);
+      this.taskService.updateTask(Number(this.taskId), formValue);
 
       this.router.navigate(['/tasks', this.taskId]);
       return;
@@ -50,7 +47,8 @@ export class TaskForm {
     this.taskService.addTask({
       id: Date.now(),
       ...formValue,
-    } as Task);
+      createdAt: new Date().toISOString(),
+    });
 
     this.router.navigate(['/tasks']);
   }

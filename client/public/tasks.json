@@ -1,11 +1,12 @@
 [
   {
     "id": 1,
-    "title": "Learn Angular routing",
-    "description": "Practice routes and route parameters",
-    "status": "in-progress",
+    "title": "Learn Angular",
+    "description": "Practice Angular Signals",
+    "status": "todo",
     "priority": "high",
-    "dueDate": "2026-09-28"
+    "dueDate": "2026-10-20",
+    "createdAt": "2026-10-10T12:00:00.000Z"
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "description": "Review Angular fundamentals",
     "status": "todo",
     "priority": "high",
-    "dueDate": "2026-09-30"
+    "dueDate": "2026-09-30",
+    "createdAt": "2026-10-11T12:00:00.000Z"
   },
   {
     "id": 3,
@@ -21,6 +23,7 @@
     "description": "Practice interfaces and union types",
     "status": "done",
     "priority": "medium",
-    "dueDate": "2026-09-25"
+    "dueDate": "2026-09-25",
+    "createdAt": "2026-10-13T12:00:00.000Z"
   }
 ]
