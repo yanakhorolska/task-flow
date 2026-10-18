@@ -60,7 +60,7 @@ export const updateTask = async (
     task.description = data.description;
   }
   if (data.dueDate !== undefined) {
-    task.dueDate = new Date(data.dueDate);
+    task.dueDate = data.dueDate === null ? null : new Date(data.dueDate);
   }
 
   await em.flush();

@@ -23,5 +23,5 @@ export class Task {
   createdAt: Opt<Date> = new Date();
 
   @Property({ type: "Date", nullable: true })
-  dueDate?: Date;
+  dueDate?: Date | null;
 }

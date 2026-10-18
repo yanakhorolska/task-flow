@@ -5,7 +5,7 @@ export const createTaskSchema = z.object({
   description: z.string().trim().optional(),
   status: z.enum(["todo", "in-progress", "done"]),
   priority: z.enum(["low", "medium", "high"]),
-  dueDate: z.iso.date().optional(),
+  dueDate: z.iso.datetime({ offset: true }).nullish(),
 });
 export type CreateTaskInput = z.infer<typeof createTaskSchema>;
 
