@@ -1,5 +1,23 @@
-<section class="placeholder-page">
-  <span class="eyebrow">Wishlist</span>
-  <h1>Wishlist</h1>
-  <p>This route now has its own page component and can be developed independently later.</p>
+<section class="simple-list-page">
+  <header class="list-header"><span class="eyebrow">Your cozy workspace</span><h1>Wishlist</h1><p>Keep the little things you dream of in one place.</p></header>
+  <section class="list-card">
+    <form class="new-item-form" (ngSubmit)="add()">
+      <label for="new-item">Add a new item</label>
+      <div class="input-row"><input id="new-item" type="text" name="title" [(ngModel)]="newTitle" maxlength="200" placeholder="What would you love to have or do?" required /><button type="submit" [disabled]="!newTitle.trim() || saving()">{{ saving() ? 'Adding...' : '+ Add' }}</button></div>
+    </form>
+    <div class="list-heading"><h2>Your list</h2><span>{{ items().length }} items</span></div>
+    @if (error()) { <p class="list-error" role="alert">{{ error() }}</p> }
+    @if (loading()) { <p class="list-empty">Loading...</p> }
+    @else {
+      <div class="items">
+        @for (item of items(); track item.id) {
+          <div class="list-item" [class.is-complete]="item.completed">
+            <button type="button" class="check-button" [attr.aria-label]="item.completed ? 'Mark incomplete' : 'Mark complete'" [attr.aria-pressed]="item.completed" (click)="toggle(item)">{{ item.completed ? '✓' : '' }}</button>
+            <span class="item-title">{{ item.title }}</span>
+            <button type="button" class="delete-button" (click)="remove(item)" [attr.aria-label]="'Delete ' + item.title">×</button>
+          </div>
+        } @empty { <div class="list-empty">Nothing here yet. Start with one little step ✨</div> }
+      </div>
+    }
+  </section>
 </section>

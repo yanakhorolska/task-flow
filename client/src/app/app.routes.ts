@@ -6,10 +6,6 @@ import { MyProfile } from './pages/profile/profile';
 import { TaskList } from './pages/tasks/task-list';
 import { TaskDetails } from './pages/task-details/task-details';
 import { TaskForm } from './pages/task-form/task-form';
-import { CalendarPage } from './pages/calendar/calendar';
-import { FocusPage } from './pages/focus/focus';
-import { PhonesPage } from './pages/phones/phones';
-import { NotesPage } from './pages/notes/notes';
 import { GoalsPage } from './pages/goals/goals';
 import { WishlistPage } from './pages/wishlist/wishlist';
 import { authGuard, guestGuard } from './guards/auth.guard';
@@ -25,10 +21,6 @@ export const routes: Routes = [
       { path: 'tasks/new', component: TaskForm },
       { path: 'tasks/:id', component: TaskDetails },
       { path: 'tasks/:id/edit', component: TaskForm },
-      { path: 'calendar', component: CalendarPage },
-      { path: 'focus', component: FocusPage },
-      { path: 'phones', component: PhonesPage },
-      { path: 'notes', component: NotesPage },
       { path: 'goals', component: GoalsPage },
       { path: 'wishlist', component: WishlistPage },
       { path: '', redirectTo: 'profile', pathMatch: 'full' },
