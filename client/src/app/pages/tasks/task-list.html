@@ -36,8 +36,10 @@
       }
     </div>
   </section>
-  <section class="stats" aria-label="Task summary">
-    <p>Filter by:</p>
+  <section class="task-toolbar" aria-label="Task filters and sorting">
+    <div class="toolbar-heading"><div><span class="eyebrow">Stay on track</span><h2>Find your focus</h2></div><span class="toolbar-caption">A little progress every day ✦</span></div>
+    <div class="stats" aria-label="Task summary">
+      <p class="filter-label">Filter by status</p>
     <div class="filter-button-box">
       <button
         type="button"
@@ -46,8 +48,8 @@
         [class.active]="statusFilter() === 'all'"
         [attr.aria-pressed]="statusFilter() === 'all'"
       >
-        Total tasks
-        {{ vm.total }}
+        <span class="filter-title">All tasks</span>
+        <span class="filter-count">{{ vm.total }}</span>
       </button>
       <button
         type="button"
@@ -56,8 +58,8 @@
         [class.active]="statusFilter() === 'todo'"
         [attr.aria-pressed]="statusFilter() === 'todo'"
       >
-        To do
-        {{ vm.todo }}
+        <span class="filter-title">To do</span>
+        <span class="filter-count">{{ vm.todo }}</span>
       </button>
       <button
         type="button"
@@ -66,8 +68,8 @@
         [class.active]="statusFilter() === 'in-progress'"
         [attr.aria-pressed]="statusFilter() === 'in-progress'"
       >
-        In progress
-        {{ vm.inProgress }}
+        <span class="filter-title">In progress</span>
+        <span class="filter-count">{{ vm.inProgress }}</span>
       </button>
       <button
         type="button"
@@ -76,18 +78,19 @@
         [class.active]="statusFilter() === 'done'"
         [attr.aria-pressed]="statusFilter() === 'done'"
       >
-        Completed
-        {{ vm.done }}
+        <span class="filter-title">Completed</span>
+        <span class="filter-count">{{ vm.done }}</span>
       </button>
     </div>
-  </section>
-  <select #sortSelect (change)="onSortChange(sortSelect.value)">
+    </div>
+    <div class="sort-row"><label for="task-sort">Sort tasks</label><div class="sort-select-wrap"><select id="task-sort" #sortSelect (change)="onSortChange(sortSelect.value)">
     <option value="due-asc">Due date: earliest</option>
     <option value="due-desc">Due date: latest</option>
     <option value="priority">Priority: highest first</option>
     <option value="newest">Newest first</option>
     <option value="oldest">Oldest first</option>
-  </select>
+    </select><span aria-hidden="true" class="sort-chevron">⌄</span></div></div>
+  </section>
   <section class="task-panel">
     <div class="panel-heading">
       <div>
