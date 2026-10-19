@@ -6,7 +6,9 @@ import cors from "cors";
 
 import { connectDB } from "./db-connection.js";
 import { createTaskRouter } from "./routes/task.routes.js";
+
 import { errorHandler } from "./middleware/error-handler.js";
+import { createAuthRouter } from "./routes/auth.routes.js";
 
 const app = express();
 
@@ -22,6 +24,7 @@ const startServer = async () => {
     const orm = await connectDB();
 
     app.use("/tasks", createTaskRouter(orm));
+    app.use("/auth", createAuthRouter(orm));
 
     app.use(errorHandler);
 

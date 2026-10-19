@@ -1,6 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { Entity, PrimaryKey, Property } from "@mikro-orm/decorators/legacy";
 import type { Opt } from "@mikro-orm/core";
+import { ManyToOne } from "@mikro-orm/decorators/legacy";
+import { User } from "./user.entity.js";
 
 @Entity({ tableName: "tasks" })
 export class Task {
@@ -24,4 +26,7 @@ export class Task {
 
   @Property({ type: "Date", nullable: true })
   dueDate?: Date | null;
+
+  @ManyToOne(() => User, { nullable: true })
+  user: User | null = null;
 }

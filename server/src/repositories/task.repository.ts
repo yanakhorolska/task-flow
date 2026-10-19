@@ -1,78 +1,112 @@
-import { MikroORM } from "@mikro-orm/postgresql";
+import type { MikroORM } from "@mikro-orm/postgresql";
 import { Task } from "../entities/task.entity.js";
+import { User } from "../entities/user.entity.js";
 import type { CreateTaskInput } from "../schemas/task.schema.js";
-import type { UpdateTaskInput } from "../schemas/task.schema.js";
+import { z } from "zod";
+import { updateTaskSchema } from "../schemas/task.schema.js";
 
-export const getAllTasks = async (orm: MikroORM) => {
+type UpdateTaskInput = z.infer<typeof updateTaskSchema>;
+
+// GET /tasks
+export const getAllTasks = async (orm: MikroORM, userId: string) => {
   const em = orm.em.fork();
 
-  return em.find(Task, {});
+  return em.find(Task, { user: userId });
 };
 
-export const createTask = async (orm: MikroORM, data: CreateTaskInput) => {
+// GET /tasks/:id
+export const getTaskById = async (
+  orm: MikroORM,
+  taskId: string,
+  userId: string,
+) => {
   const em = orm.em.fork();
-  const taskRepository = em.getRepository(Task);
 
-  const task = taskRepository.create({
+  return em.findOne(Task, {
+    id: taskId,
+    user: userId,
+  });
+};
+
+// POST /tasks
+export const createTask = async (
+  orm: MikroORM,
+  data: CreateTaskInput,
+  userId: string,
+) => {
+  const em = orm.em.fork();
+
+  const user = await em.findOne(User, { id: userId });
+
+  if (!user) {
+    return null;
+  }
+
+  const task = em.create(Task, {
     title: data.title,
-    ...(data.description !== undefined && { description: data.description }),
-    status: data.status ?? "todo",
-    priority: data.priority ?? "medium",
-    ...(data.dueDate && { dueDate: new Date(data.dueDate) }),
+    status: data.status,
+    priority: data.priority,
+    ...(data.description !== undefined
+      ? { description: data.description }
+      : {}),
+    ...(data.dueDate !== undefined
+      ? { dueDate: data.dueDate === null ? null : new Date(data.dueDate) }
+      : {}),
+    user,
   });
 
-  await em.persist(task).flush();
+  await em.flush();
 
   return task;
 };
 
-export const getTaskById = async (orm: MikroORM, id: string) => {
-  const em = orm.em.fork();
-  const taskRepository = em.getRepository(Task);
-
-  const task = await taskRepository.findOne({ id });
-
-  return task;
-};
-
+// PATCH /tasks/:id
 export const updateTask = async (
   orm: MikroORM,
-  id: string,
+  taskId: string,
+  userId: string,
   data: UpdateTaskInput,
 ) => {
   const em = orm.em.fork();
-  const task = await em.findOne(Task, { id });
+
+  const task = await em.findOne(Task, {
+    id: taskId,
+    user: userId,
+  });
 
   if (!task) {
     return null;
   }
 
-  if (data.title !== undefined) {
-    task.title = data.title;
-  }
-  if (data.status !== undefined) {
-    task.status = data.status;
-  }
-  if (data.priority !== undefined) {
-    task.priority = data.priority;
-  }
-  if (data.description !== undefined) {
-    task.description = data.description;
-  }
-  if (data.dueDate !== undefined) {
-    task.dueDate = data.dueDate === null ? null : new Date(data.dueDate);
-  }
+  em.assign(task, {
+    ...(data.title !== undefined && { title: data.title }),
+    ...(data.description !== undefined && {
+      description: data.description,
+    }),
+    ...(data.status !== undefined && { status: data.status }),
+    ...(data.priority !== undefined && { priority: data.priority }),
+    ...(data.dueDate !== undefined && {
+      dueDate: data.dueDate === null ? null : new Date(data.dueDate),
+    }),
+  });
 
   await em.flush();
+
   return task;
 };
 
+// DELETE /tasks/:id
 export const deleteTask = async (
   orm: MikroORM,
-  id: string,
-): Promise<boolean> => {
+  taskId: string,
+  userId: string,
+) => {
   const em = orm.em.fork();
-  const task = await em.findOne(Task, { id });
+
+  const task = await em.findOne(Task, {
+    id: taskId,
+    user: userId,
+  });
 
   if (!task) {
     return false;

@@ -16,105 +16,121 @@ import {
   taskIdSchema,
 } from "../schemas/task.schema.js";
 
-export const getAllTasksController = (orm: MikroORM) => {
-  return async (req: Request, res: Response) => {
-    const tasks = await getAllTasks(orm);
-    res.json(tasks);
-  };
+// GET /tasks
+export const getAllTasksController = async (
+  req: Request,
+  res: Response,
+  orm: MikroORM,
+) => {
+  const userId = res.locals.userId as string;
+  const tasks = await getAllTasks(orm, userId);
+
+  return res.status(200).json(tasks);
 };
 
+// GET /tasks/:id
 export const getTaskByIdController = (orm: MikroORM) => {
   return async (req: Request, res: Response) => {
     const result = taskIdSchema.safeParse(req.params.id);
 
     if (!result.success) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Invalid task ID",
         errors: z.flattenError(result.error),
       });
-      return;
     }
 
-    const task = await getTaskById(orm, result.data);
+    const userId = res.locals.userId as string;
+    const task = await getTaskById(orm, result.data, userId);
 
     if (!task) {
-      res.status(404).json({ message: "Task not found" });
-      return;
+      return res.status(404).json({ message: "Task not found" });
     }
 
-    res.json(task);
+    return res.status(200).json(task);
   };
 };
 
+// POST /tasks
 export const createTaskController = (orm: MikroORM) => {
   return async (req: Request, res: Response) => {
     const result = createTaskSchema.safeParse(req.body);
 
     if (!result.success) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Validation failed",
         errors: z.flattenError(result.error),
       });
-      return;
     }
 
-    const task = await createTask(orm, result.data);
+    const userId = res.locals.userId as string;
+    const task = await createTask(orm, result.data, userId);
 
-    res.status(201).json(task);
+    if (!task) {
+      return res.status(401).json({
+        message: "User not found",
+      });
+    }
+
+    return res.status(201).json(task);
   };
 };
 
+// PATCH /tasks/:id
 export const updateTaskController = (orm: MikroORM) => {
   return async (req: Request, res: Response) => {
     const idResult = taskIdSchema.safeParse(req.params.id);
     const bodyResult = updateTaskSchema.safeParse(req.body);
 
     if (!idResult.success) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Invalid task ID",
         errors: z.flattenError(idResult.error),
       });
-      return;
     }
 
     if (!bodyResult.success) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Validation failed",
         errors: z.flattenError(bodyResult.error),
       });
-      return;
     }
 
-    const task = await updateTask(orm, idResult.data, bodyResult.data);
+    const userId = res.locals.userId as string;
+
+    const task = await updateTask(orm, idResult.data, userId, bodyResult.data);
 
     if (!task) {
-      res.status(404).json({ message: "Task not found" });
-      return;
+      return res.status(404).json({
+        message: "Task not found",
+      });
     }
 
-    res.json(task);
+    return res.status(200).json(task);
   };
 };
 
+// DELETE /tasks/:id
 export const deleteTaskController = (orm: MikroORM) => {
   return async (req: Request, res: Response) => {
     const result = taskIdSchema.safeParse(req.params.id);
 
     if (!result.success) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Invalid task ID",
         errors: z.flattenError(result.error),
       });
-      return;
     }
 
-    const deleted = await deleteTask(orm, result.data);
+    const userId = res.locals.userId as string;
+    const deleted = await deleteTask(orm, result.data, userId);
 
     if (!deleted) {
-      res.status(404).json({ message: "Task not found" });
-      return;
+      return res.status(404).json({
+        message: "Task not found",
+      });
     }
 
-    res.status(204).send();
+    return res.status(204).send();
   };
 };
