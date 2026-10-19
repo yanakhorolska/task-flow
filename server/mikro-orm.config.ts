@@ -5,20 +5,20 @@ import { User } from "./src/entities/user.entity.js";
 import { Goal } from "./src/entities/goal.entity.js";
 import { WishlistItem } from "./src/entities/wishlist-item.entity.js";
 
-const password = process.env.DB_PASSWORD;
-
-if (!password) {
-  throw new Error("DB_PASSWORD is missing");
+const isDirect = process.env.DB_CONNECTION_MODE === "direct";
+const cloudUrl = isDirect ? process.env.DIRECT_URL : process.env.DATABASE_URL;
+if (isDirect && !cloudUrl) {
+  throw new Error("DIRECT_URL is required for cloud database migrations");
+}
+const localPassword = process.env.DB_PASSWORD;
+if (!cloudUrl && !localPassword) {
+  throw new Error("Set DATABASE_URL for Neon or DB_PASSWORD for local PostgreSQL");
 }
 
 export default defineConfig({
   entities: [Task, User, Goal, WishlistItem],
-  dbName: "taskflow",
-  host: "localhost",
-  port: 5432,
-  user: "taskflow",
-  password,
-  migrations: {
-    path: "./src/migrations",
-  },
+  ...(cloudUrl
+    ? { clientUrl: cloudUrl, pool: { min: 0, max: 2 } }
+    : { dbName: "taskflow", host: "localhost", port: 5432, user: "taskflow", password: localPassword }),
+  migrations: { path: "./src/migrations" },
 });
