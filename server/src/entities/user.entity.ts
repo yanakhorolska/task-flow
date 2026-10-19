@@ -1,11 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { Entity, PrimaryKey, Property } from "@mikro-orm/decorators/legacy";
 import type { Opt } from "@mikro-orm/core";
-import { Collection } from "@mikro-orm/core";
-import { OneToMany } from "@mikro-orm/decorators/legacy";
-import { Task } from "./task.entity.js";
-import { Goal } from "./goal.entity.js";
-import { WishlistItem } from "./wishlist-item.entity.js";
 
 @Entity({ tableName: "users" })
 export class User {
@@ -48,12 +43,4 @@ export class User {
   @Property({ type: "string", default: "user" })
   role: Opt<"user" | "admin"> = "user";
 
-  @OneToMany(() => Task, (task) => task.user)
-  tasks = new Collection<Task>(this);
-
-  @OneToMany(() => Goal, (goal) => goal.user)
-  goals = new Collection<Goal>(this);
-
-  @OneToMany(() => WishlistItem, (item) => item.user)
-  wishlistItems = new Collection<WishlistItem>(this);
 }

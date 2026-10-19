@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { Entity, PrimaryKey, Property, ManyToOne } from "@mikro-orm/decorators/legacy";
 import type { Opt } from "@mikro-orm/core";
-import type { User } from "./user.entity.js";
+import { User } from "./user.entity.js";
 
 @Entity({ tableName: "goals" })
 export class Goal {
@@ -9,5 +9,5 @@ export class Goal {
   @Property({ type: "string" }) title!: string;
   @Property({ type: "boolean", default: false }) completed: Opt<boolean> = false;
   @Property({ type: "Date" }) createdAt: Opt<Date> = new Date();
-  @ManyToOne("User") user!: User;
+  @ManyToOne(() => User) user!: User;
 }
