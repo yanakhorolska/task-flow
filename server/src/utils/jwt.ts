@@ -7,5 +7,5 @@ export const generateAccessToken = (userId: string): string => {
     throw new Error("JWT_SECRET is not configured");
   }
 
-  return jwt.sign({ sub: userId }, secret, { expiresIn: "15m" });
+  return jwt.sign({ sub: userId }, secret, { expiresIn: "8h" });
 };

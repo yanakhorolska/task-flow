@@ -39,7 +39,7 @@ export const authenticate = (
       });
     }
     res.locals.userId = payload.sub;
-    next();
+    return next();
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
       return res.status(401).json({

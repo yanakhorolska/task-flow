@@ -22,6 +22,9 @@ export class User {
   @Property({ type: "string", nullable: true })
   avatarUrl: string | null = null;
 
+  @Property({ type: "Date", nullable: true })
+  birthDate: Date | null = null;
+
   @Property({ type: "text", nullable: true })
   bio: string | null = null;
 

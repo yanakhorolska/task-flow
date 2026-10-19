@@ -9,6 +9,7 @@ import { createTaskRouter } from "./routes/task.routes.js";
 
 import { errorHandler } from "./middleware/error-handler.js";
 import { createAuthRouter } from "./routes/auth.routes.js";
+import { createUserRouter } from "./routes/user.routes.js";
 
 const app = express();
 
@@ -25,6 +26,7 @@ const startServer = async () => {
 
     app.use("/tasks", createTaskRouter(orm));
     app.use("/auth", createAuthRouter(orm));
+    app.use("/users", createUserRouter(orm));
 
     app.use(errorHandler);
 
