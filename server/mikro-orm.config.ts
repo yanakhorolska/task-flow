@@ -14,7 +14,9 @@ if (isDirect && !cloudUrl) {
 
 const localPassword = process.env.DB_PASSWORD;
 if (!cloudUrl && !localPassword) {
-  throw new Error("Set DATABASE_URL for Neon or DB_PASSWORD for local PostgreSQL");
+  throw new Error(
+    "Set DATABASE_URL for Neon or DB_PASSWORD for local PostgreSQL",
+  );
 }
 
 const entities = [Task, User, Goal, WishlistItem];
@@ -23,6 +25,9 @@ const config = cloudUrl
   ? defineConfig({
       entities,
       clientUrl: cloudUrl,
+      driverOptions: {
+        ssl: true,
+      },
       pool: { min: 0, max: 2 },
       migrations: { path: "./src/migrations" },
     })
