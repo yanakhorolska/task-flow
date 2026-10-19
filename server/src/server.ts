@@ -10,6 +10,7 @@ import { createTaskRouter } from "./routes/task.routes.js";
 import { errorHandler } from "./middleware/error-handler.js";
 import { createAuthRouter } from "./routes/auth.routes.js";
 import { createUserRouter } from "./routes/user.routes.js";
+import { createListItemRouter } from "./routes/list-item.routes.js";
 
 const app = express();
 
@@ -27,6 +28,8 @@ const startServer = async () => {
     app.use("/tasks", createTaskRouter(orm));
     app.use("/auth", createAuthRouter(orm));
     app.use("/users", createUserRouter(orm));
+    app.use("/goals", createListItemRouter(orm, "goals"));
+    app.use("/wishlist", createListItemRouter(orm, "wishlist"));
 
     app.use(errorHandler);
 
