@@ -1,5 +1,6 @@
 import type { MikroORM } from "@mikro-orm/postgresql";
 import { User } from "../entities/user.entity.js";
+import { Task } from "../entities/task.entity.js";
 
 export const getUserById = async (orm: MikroORM, id: string) => {
   const em = orm.em.fork();
@@ -37,12 +38,16 @@ export const createUser = async (orm: MikroORM, data: CreateUserInput) => {
 export const getUserWithTasks = async (orm: MikroORM, userId: string) => {
   const em = orm.em.fork();
 
-  const user = await em.findOne(User, { id: userId }, { populate: ["tasks"] });
-  return user;
+  const user = await em.findOne(User, { id: userId });
+  if (!user) return null;
+  const tasks = await em.find(Task, { user: userId });
+  return { user, tasks };
 };
 
 export const getUsersWithTasks = async (orm: MikroORM) => {
   const em = orm.em.fork();
 
-  return em.find(User, {}, { populate: ["tasks"] });
+  const users = await em.find(User, {});
+  const tasks = await em.find(Task, {});
+  return users.map((user) => ({ user, tasks: tasks.filter((task) => task.user?.id === user.id) }));
 };
