@@ -5,6 +5,7 @@
     <p>Add the information needed to plan and prioritize your work.</p>
   </header>
 
+  @if (error()) { <p class="error" role="alert">{{ error() }}</p> }
   <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
     <div class="field field-full">
       <label for="title">Title</label>

@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { TaskCard } from '../../components/tasks/task-card/task-card';
@@ -13,7 +13,9 @@ type TaskSort = 'newest' | 'oldest' | 'due-asc' | 'due-desc' | 'priority';
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss',
 })
-export class TaskList {
+export class TaskList implements OnInit {
+  error = signal("");
+  ngOnInit() { this.taskService.loadTasks().subscribe({error:()=>this.error.set("Could not load tasks.")}); }
   private taskService = inject(TaskService);
 
   searchQuery = signal('');
@@ -39,12 +41,12 @@ export class TaskList {
 
     if (sort === 'due-asc') {
       return [...tasks].sort(
-        (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime(),
+        (a, b) => (a.dueDate ? new Date(a.dueDate).getTime() : Infinity) - (b.dueDate ? new Date(b.dueDate).getTime() : Infinity),
       );
     }
     if (sort === 'due-desc') {
       return [...tasks].sort(
-        (a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime(),
+        (a, b) => (b.dueDate ? new Date(b.dueDate).getTime() : -Infinity) - (a.dueDate ? new Date(a.dueDate).getTime() : -Infinity),
       );
     }
     if (sort === 'priority') {

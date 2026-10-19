@@ -1,4 +1,4 @@
-@if (task(); as task) {
+@if (isLoading()) { <p>Loading task...</p> } @else if (task(); as task) {
   <section class="details-page">
     <a class="back-link" routerLink="/tasks">← Back to tasks</a>
 

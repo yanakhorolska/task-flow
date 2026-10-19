@@ -7,6 +7,7 @@
 
     <a class="primary-action" routerLink="/tasks/new">+ New task</a>
   </section>
+  @if (error()) { <p role="alert">{{ error() }}</p> }
   <section class="search-section">
     <div class="search-wrapper">
       <input

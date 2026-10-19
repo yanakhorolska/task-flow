@@ -6,9 +6,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './task-delete-button.scss',
 })
 export class TaskDeleteButton {
-  @Input({ required: true }) taskId!: number;
+  @Input({ required: true }) taskId!: string;
 
-  @Output() deleteTask = new EventEmitter<number>();
+  @Output() deleteTask = new EventEmitter<string>();
 
   onDelete(): void {
     this.deleteTask.emit(this.taskId);

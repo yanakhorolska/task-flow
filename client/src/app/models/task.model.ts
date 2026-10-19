@@ -1,15 +1,12 @@
 export type TaskStatus = 'todo' | 'in-progress' | 'done';
-
 export type TaskPriority = 'low' | 'medium' | 'high';
-
 export interface Task {
-  id: number;
+  id: string;
   title: string;
-  description: string;
+  description: string | null;
   status: TaskStatus;
   priority: TaskPriority;
-  dueDate: string;
+  dueDate: string | null;
   createdAt: string;
 }
-
-export type TaskUpdate = Omit<Task, 'id' | 'createdAt'>;
+export type TaskUpdate = Pick<Task, 'title' | 'description' | 'status' | 'priority' | 'dueDate'>;

@@ -1,0 +1,19 @@
+<section class="profile-page">
+  <header class="profile-heading"><div><span class="eyebrow">Your little corner</span><h1>My Profile</h1><p>A quiet place for your goals, your progress and you.</p></div><a class="outline-link" routerLink="/tasks">View my tasks →</a></header>
+  @if (loading()) { <p>Loading your profile...</p> }
+  @else if (profile(); as user) {
+    <div class="profile-card">
+      <div class="cover"><span>✧ grow at your own pace ✧</span></div>
+      <div class="identity">
+        <div class="portrait">@if (user.avatarUrl) { <img [src]="user.avatarUrl" alt="Profile photo" referrerpolicy="no-referrer" /> } @else { <span>{{ user.name.charAt(0).toUpperCase() }}</span> }</div>
+        <div class="identity-copy"><span class="eyebrow">Welcome to your space</span><h2>{{ user.name }}</h2><p>{{ user.email }}</p></div>
+        <button type="button" class="edit-button" (click)="editing.set(!editing())">{{ editing() ? 'Cancel' : 'Edit profile' }}</button>
+      </div>
+      <div class="profile-body"><div class="about"><h3>About me</h3><p>{{ user.bio || 'A little about you will appear here. Add a bio to make this space yours.' }}</p><div class="facts"><span>✿ {{ age() === null ? 'Age not added' : age() + ' years old' }}</span><span>♡ Member of TaskFlow</span></div></div>
+      <div class="progress-card"><span class="eyebrow">Your progress</span><div class="progress-title"><h3>Keep growing</h3><strong>{{ user.progress.percent }}%</strong></div><div class="track"><div class="fill" [style.width.%]="user.progress.percent"></div></div><p>{{ user.progress.completed }} of {{ user.progress.total }} tasks completed</p><a routerLink="/tasks">Continue with tasks →</a></div></div>
+    </div>
+    @if (editing()) { <form class="edit-form" [formGroup]="form" (ngSubmit)="save()"><h3>Edit your details</h3><div class="fields"><label>Name<input formControlName="name" maxlength="80" /></label><label>Date of birth<input type="date" formControlName="birthDate" /></label><label class="wide">Photo URL<input type="url" formControlName="avatarUrl" placeholder="https://example.com/photo.jpg" /></label><label class="wide">Bio<textarea formControlName="bio" rows="4" maxlength="500" placeholder="A few words about you..."></textarea></label></div><button type="submit" [disabled]="saving()">{{ saving() ? 'Saving...' : 'Save changes' }}</button></form> }
+  }
+  @if (error()) { <p class="message error" role="alert">{{ error() }}</p> }
+  @if (success()) { <p class="message success" role="status">{{ success() }}</p> }
+</section>

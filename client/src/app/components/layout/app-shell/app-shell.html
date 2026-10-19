@@ -1,12 +1,13 @@
 <div class="app-shell">
   <aside class="sidebar">
-    <a class="brand" routerLink="/tasks" aria-label="TaskFlow home">
+    <a class="brand" routerLink="/profile" aria-label="TaskFlow home">
       <span class="brand-mark">❧</span>
       <span>TaskFlow</span>
     </a>
 
     <nav class="nav" aria-label="Main navigation">
       <span class="nav-label">Workspace</span>
+      <a routerLink="/profile" routerLinkActive="active"><span class="nav-icon">☺</span> My profile</a>
 
       <a routerLink="/tasks" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <span class="nav-icon">☷</span>
@@ -50,8 +51,7 @@
     </nav>
 
     <div class="sidebar-footer">
-      <a routerLink="/login">Sign in</a>
-      <a class="register-link" routerLink="/register">Create account</a>
+      <button class="logout-button" type="button" (click)="logout()">Sign out</button>
     </div>
   </aside>
 
@@ -66,7 +66,7 @@
         <button class="theme-preview" type="button" aria-label="Theme settings preview" disabled>
           ☼
         </button>
-        <div class="avatar" aria-label="Yana">Y</div>
+        <a class="avatar" routerLink="/profile" aria-label="My profile">{{ auth.currentUser()?.name?.charAt(0)?.toUpperCase() || "☺" }}</a>
       </div>
     </header>
 

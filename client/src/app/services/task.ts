@@ -1,74 +1,35 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { tap } from 'rxjs';
 import { Task, TaskUpdate } from '../models/task.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class TaskService {
   private http = inject(HttpClient);
+  private readonly apiUrl = 'http://localhost:3000/tasks';
   private readonly tasksState = signal<Task[]>([]);
   readonly tasks = this.tasksState.asReadonly();
-  // private readonly storageKey = 'taskflow-tasks';
-  // private saveTasks(): void {
-  //   const tasks = this.tasksState();
-  //   localStorage.setItem(this.storageKey, JSON.stringify(tasks));
-  // }
 
-  // private loadSavedTasks(): string | null {
-  //   return localStorage.getItem(this.storageKey);
-  // }
-  // private parseSavedTasks(saved: string): unknown {
-  //   try {
-  //     return JSON.parse(saved);
-  //   } catch (error) {
-  //     console.error('Failed to parse saved tasks', error);
-  //     return null;
-  //   }
-  // }
-
-  constructor() {
-    this.loadTasks();
+  loadTasks() {
+    return this.http.get<Task[]>(this.apiUrl).pipe(tap(tasks => this.tasksState.set(tasks)));
   }
-
-  getTaskById(id: number): Task | undefined {
-    return this.tasks().find((task) => task.id === id);
+  getTaskById(id: string) {
+    return this.http.get<Task>(`${this.apiUrl}/${id}`);
   }
-
-  loadTasks(): void {
-    this.http.get<Task[]>('/tasks.json').subscribe((tasks) => {
-      this.tasksState.set(tasks);
-    });
-  }
-
-  addTask(newTask: Task): void {
-    this.tasksState.update((tasks) => [...tasks, newTask]);
-  }
-
-  deleteTask(id: number): void {
-    this.tasksState.update((tasks) => tasks.filter((task) => task.id !== id));
-  }
-
-  updateTask(id: number, updatedTask: TaskUpdate): void {
-    this.tasksState.update((tasks) =>
-      tasks.map((task) =>
-        task.id === id
-          ? {
-              ...task,
-              title: updatedTask.title,
-              description: updatedTask.description,
-              status: updatedTask.status,
-              priority: updatedTask.priority,
-              dueDate: updatedTask.dueDate,
-            }
-          : task,
-      ),
+  addTask(data: TaskUpdate) {
+    return this.http.post<Task>(this.apiUrl, data).pipe(
+      tap(task => this.tasksState.update(tasks => [...tasks, task])),
     );
   }
+  updateTask(id: string, data: Partial<TaskUpdate>) {
+    return this.http.patch<Task>(`${this.apiUrl}/${id}`, data).pipe(
+      tap(task => this.tasksState.update(tasks => tasks.map(t => t.id === id ? task : t))),
+    );
+  }
+  deleteTask(id: string) {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      tap(() => this.tasksState.update(tasks => tasks.filter(t => t.id !== id))),
+    );
+  }
+  clear() { this.tasksState.set([]); }
 }
-// description: string;
-// status: TaskStatus;
-// priority: TaskPriority;
-// dueDate: string;
-// createdAt: string;

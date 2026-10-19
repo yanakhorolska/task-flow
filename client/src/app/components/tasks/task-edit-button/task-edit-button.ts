@@ -8,5 +8,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './task-edit-button.scss',
 })
 export class TaskEditButton {
-  @Input({ required: true }) taskId!: number;
+  @Input({ required: true }) taskId!: string;
 }

@@ -11,7 +11,7 @@
       <span class="priority" [attr.data-priority]="task.priority">
         {{ task.priority }} priority
       </span>
-      <span>Due {{ task.dueDate | date: 'dd MMM yyyy' }}</span>
+      <span>Due {{ task.dueDate ? (task.dueDate | date: 'dd MMM yyyy') : 'Not set' }}</span>
       <span>Created at {{ task.createdAt | date: 'dd MMM yyyy' }}</span>
     </div>
   </div>
