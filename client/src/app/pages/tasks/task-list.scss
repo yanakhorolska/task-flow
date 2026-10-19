@@ -247,3 +247,128 @@ input:focus {
     padding: 16px;
   }
 }
+
+/* Unified filters and sorting — cozy TaskFlow toolbar */
+.task-toolbar {
+  margin-bottom: 22px;
+  padding: 23px 25px 21px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(135deg, #fffdf9 0%, #fcf6ee 100%);
+  box-shadow: 0 12px 36px rgba(91, 65, 49, 0.055);
+}
+.toolbar-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 17px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.toolbar-heading h2 {
+  margin: 5px 0 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+.toolbar-caption {
+  color: var(--muted);
+  font-size: .84rem;
+  font-style: italic;
+}
+.task-toolbar .stats { margin: 0; }
+.task-toolbar .filter-label,
+.sort-row label {
+  color: var(--muted-strong);
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .035em;
+}
+.task-toolbar .filter-button-box {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 11px;
+  padding-top: 10px;
+}
+.task-toolbar .filter-button {
+  min-width: 0;
+  min-height: 78px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 13px 16px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 3px 12px rgba(91, 65, 49, .03);
+  transition: border-color .18s, background .18s, transform .18s, box-shadow .18s;
+  text-align: left;
+}
+.task-toolbar .filter-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(91, 65, 49, .08);
+}
+.task-toolbar .filter-button.active {
+  border: 1px solid var(--accent);
+  background: #fcf0e7;
+  box-shadow: inset 0 0 0 1px rgba(164,102,72,.1);
+}
+.task-toolbar .status-todo.active { border-color: #88a6b6; background: #eef4f8; }
+.task-toolbar .status-in-progress.active { border-color: #c9a666; background: #fcf5e3; }
+.task-toolbar .status-done.active { border-color: #8fa587; background: #eef4e9; }
+.filter-title { font-size: .85rem; font-weight: 750; }
+.filter-count { font: 700 1.45rem/1 Georgia, 'Times New Roman', serif; }
+.sort-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 19px;
+  padding-top: 17px;
+  border-top: 1px solid var(--line);
+}
+.sort-select-wrap {
+  position: relative;
+  width: min(100%, 260px);
+}
+.sort-select-wrap select {
+  appearance: none;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 37px 10px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: .86rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.sort-select-wrap select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.sort-chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-55%);
+  pointer-events: none;
+  font-size: 1.2rem;
+  color: var(--accent-dark);
+}
+@media (max-width: 900px) {
+  .task-toolbar .filter-button-box { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .task-toolbar { padding: 20px 15px; }
+  .toolbar-caption { display: none; }
+  .task-toolbar .filter-button { min-height: 73px; padding: 12px; }
+  .sort-row { align-items: stretch; flex-direction: column; gap: 9px; }
+  .sort-select-wrap { width: 100%; }
+}
