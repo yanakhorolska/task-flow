@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
@@ -13,7 +14,7 @@ export interface CurrentUser {
   progress: { total: number; completed: number; percent: number };
 }
 type LoginResponse = Pick<CurrentUser, 'id' | 'name' | 'email'> & { accessToken: string };
-const API = 'http://localhost:3000';
+const API = environment.apiUrl;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

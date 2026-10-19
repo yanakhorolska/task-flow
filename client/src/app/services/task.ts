@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
@@ -6,7 +7,7 @@ import { Task, TaskUpdate } from '../models/task.model';
 @Injectable({ providedIn: 'root' })
 export class TaskService {
   private http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/tasks';
+  private readonly apiUrl = `${environment.apiUrl}/tasks`;
   private readonly tasksState = signal<Task[]>([]);
   readonly tasks = this.tasksState.asReadonly();
 
