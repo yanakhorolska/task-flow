@@ -35,9 +35,9 @@ const seed = async () => {
     // 2. Check if the test task already exists
     const userWithTasks = await getUserWithTasks(orm, user.id);
 
-    const taskExists = userWithTasks?.tasks
-      .getItems()
-      .some((task) => task.title === "Learn MikroORM Relationships");
+    const taskExists = userWithTasks?.tasks.some(
+      (task) => task.title === "Learn MikroORM Relationships",
+    );
 
     // 3. Create task only if it doesn't exist
     if (!taskExists) {
@@ -59,7 +59,7 @@ const seed = async () => {
     console.log("User:", user.email);
     console.log(
       "Tasks:",
-      result?.tasks.getItems().map((task) => task.title),
+      result?.tasks.map((task) => task.title),
     );
   } finally {
     await orm.close();
