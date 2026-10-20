@@ -22,8 +22,8 @@ export class MyProfile implements OnInit {
   });
   form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
-    bio: [''],
-    avatarUrl: [''],
+    bio: ['', Validators.maxLength(500)],
+    avatarUrl: ['', Validators.pattern(/^$|^https?:\/\/\S+$/i)],
     birthDate: [''],
   });
   ngOnInit() { this.refresh(); }
