@@ -9,7 +9,7 @@
   <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
     <div class="field field-full">
       <label for="title">Title</label>
-      <input id="title" type="text" formControlName="title" placeholder="e.g. Build dashboard filters" />
+      <input id="title" type="text" [attr.aria-invalid]="taskForm.controls.title.touched && taskForm.controls.title.invalid" formControlName="title" placeholder="e.g. Build dashboard filters" />
 
       @if (taskForm.controls.title.touched && taskForm.controls.title.hasError('required')) {
         <small class="error">Title is required.</small>
@@ -55,7 +55,7 @@
 
     <div class="actions field-full">
       <a routerLink="/tasks">Cancel</a>
-      <button type="submit">{{ isEditMode ? 'Save changes' : 'Create task' }}</button>
+      <button type="submit" [disabled]="saving()">{{ saving() ? 'Saving...' : isEditMode ? 'Save changes' : 'Create task' }}</button>
     </div>
   </form>
 </section>
