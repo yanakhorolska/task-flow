@@ -26,7 +26,9 @@ export class WishlistPage implements OnInit {
   }
   add() {
     const title = this.newTitle.trim();
-    if (!title || this.saving()) return;
+    if (this.saving()) return;
+    if (!title) { this.error.set('Please enter a title.'); return; }
+    if (title.length > 200) { this.error.set('Title must not exceed 200 characters.'); return; }
     this.saving.set(true); this.error.set('');
     this.service.add(this.kind, title).subscribe({
       next: item => { this.items.update(items => [item, ...items]); this.newTitle = ''; this.saving.set(false); },
