@@ -12,9 +12,10 @@ TaskFlow is a personal workspace for managing tasks, goals, and wishlist items. 
 <img width="1905" height="913" alt="image" src="https://github.com/user-attachments/assets/072f88dd-83ae-4f15-a133-186ba7ce45cd" />
 <img width="1902" height="901" alt="image" src="https://github.com/user-attachments/assets/7b81d15c-936b-4b71-8368-7b517f4f71de" />
 
+## TEST USER
 
-Aa123456!
-test@example.com
+- Aa123456!
+- example@test.com
 
 ## Features
 
