@@ -138,3 +138,6 @@ textarea {
     flex-direction: column-reverse;
   }
 }
+
+input[aria-invalid="true"] { border-color: var(--danger); }
+.actions button:disabled { opacity: .6; cursor: wait; }
