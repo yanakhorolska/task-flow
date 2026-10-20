@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth';
 
 @Component({ selector: 'app-register', imports: [RouterLink, ReactiveFormsModule], templateUrl: './register.html', styleUrl: './register.scss' })
@@ -24,9 +25,9 @@ export class Register {
         next: () => { this.loading.set(false); this.router.navigate(['/profile']); },
         error: () => { this.loading.set(false); this.router.navigate(['/login']); },
       }),
-      error: (err: { status?: number }) => {
+      error: (err: HttpErrorResponse) => {
         this.loading.set(false);
-        this.error.set(err.status === 409 ? 'This email is already registered.' : 'Registration failed. Check your details.');
+        this.error.set(err.status === 409 ? 'This email is already registered.' : err.status === 0 ? 'Unable to connect to the server. Please try again.' : err.status === 400 ? 'Please check the information you entered.' : 'Registration failed. Please try again.');
       },
     });
   }
