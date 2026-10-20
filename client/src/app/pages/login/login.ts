@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth';
 
 @Component({ selector: 'app-login', imports: [RouterLink, ReactiveFormsModule], templateUrl: './login.html', styleUrl: './login.scss' })
@@ -19,7 +20,7 @@ export class Login {
     this.loading.set(true); this.error.set('');
     this.auth.login(this.form.getRawValue()).subscribe({
       next: () => { this.loading.set(false); this.router.navigate(['/profile']); },
-      error: () => { this.loading.set(false); this.error.set('Invalid email or password.'); },
+      error: (err: HttpErrorResponse) => { this.loading.set(false); this.error.set(err.status === 401 ? 'Invalid email or password.' : err.status === 0 ? 'Unable to connect to the server. Please try again.' : 'Sign in failed. Please try again.'); },
     });
   }
 }
