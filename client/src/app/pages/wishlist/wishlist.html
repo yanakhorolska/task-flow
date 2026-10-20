@@ -5,6 +5,7 @@
       <label for="new-item">Add a new item</label>
       <div class="input-row"><input id="new-item" type="text" name="title" [(ngModel)]="newTitle" maxlength="200" placeholder="What would you love to have or do?" required /><button type="submit" [disabled]="!newTitle.trim() || saving()">{{ saving() ? 'Adding...' : '+ Add' }}</button></div>
     </form>
+    @if (newTitle.trim().length > 200) { <p class="list-error" role="alert">Title must not exceed 200 characters.</p> }
     <div class="list-heading"><h2>Your list</h2><span>{{ items().length }} items</span></div>
     @if (error()) { <p class="list-error" role="alert">{{ error() }}</p> }
     @if (loading()) { <p class="list-empty">Loading...</p> }
