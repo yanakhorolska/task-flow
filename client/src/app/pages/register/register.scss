@@ -1,3 +1,6 @@
 @use '../../styles/auth' as auth;
 @include auth.auth-page;
 .auth-error { color: var(--danger); font-weight: 700; margin: 0; }
+
+.field-error { color: var(--danger); display: block; font-size: .8rem; margin-top: 5px; }
+input[aria-invalid="true"] { border-color: var(--danger); }
